@@ -1,0 +1,94 @@
+@import "test";
+
+body {
+  background-color: lightgray;
+}
+
+// [global scope]
+$color-primary: yellowgreen;
+$color-secondary: red;
+$color-tertiary: royalblue;
+
+$font-lg: 40px;
+$font-md: 30px;
+$font-sm: 20px;
+
+@mixin headingStyle($fontSize) {
+  font-size: $fontSize;
+  color: $color-secondary;
+  text-align: center;
+}
+
+@mixin transition($param...) {
+  //for more than one param
+  transition: $param;
+}
+
+.nav {
+  // background-color: darker($color-primary, 20%);
+  // background-color: lighten($color-primary, 20);
+  // background-color: transparentize($color-primary, 20%);
+  background-color: mix(blue, green, 10%);
+  ul li {
+    list-style: none;
+    a {
+      text-decoration: none;
+      font-size: $font-sm;
+      color: $color-secondary;
+      &:hover {
+        color: $color-tertiary;
+      }
+    }
+  }
+}
+
+// .banner h1 {
+//   // !global => to use local variable as global as well
+//   $color-secondary: red !global;
+//   // font-size: $font-lg;
+//   @include headingStyle($font-lg);
+// }
+
+// .footer h3 {
+//   // font-size: $font-md;
+//   @include headingStyle($font-md);
+//   @include transition(color 0.5s, background-color 1s);
+
+//   &:hover {
+//     color: goldenrod;
+//     background-color: $color-secondary;
+//   }
+// }
+
+//for @extend concept
+.heading {
+  color: $color-primary;
+  font-size: $font-lg;
+  background-color: $color-secondary;
+  text-align: center;
+}
+
+.banner h1 {
+  @extend .heading;
+
+  &:hover {
+    background-color: goldenrod;
+  }
+}
+
+.footer h3 {
+  @extend .heading;
+  // @extend banner h1; // not allowed to use like this instead write class name as h1
+}
+
+@function fontSize($size) {
+  @return $size * 2;
+}
+
+.banner p {
+  font-size: fontSize($font-sm);
+}
+
+.footer p {
+  // font-size: fontSize();
+}
